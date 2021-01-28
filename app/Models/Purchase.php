@@ -31,5 +31,5 @@ class Purchase extends Model
 
 
 
-    protected $fillable = ['receipt', 'uid', 'status','app_id','expire_date'];
+    protected $fillable = ['receipt', 'uid', 'status','user_uid','app_id','expire_date'];
 }

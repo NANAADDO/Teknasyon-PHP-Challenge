@@ -4,9 +4,12 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class Kernel extends ConsoleKernel
 {
+    const statusExpired=4;
     /**
      * The Artisan commands provided by your application.
      *
@@ -24,7 +27,14 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->call(function(){
+            $datetime = new Carbon('now', new \DateTimeZone("UTC"));
+           $date=$datetime->toDateTimeString();
+
+$sql = "WITH expiresSubscription AS
+(   SELECT  * from purchases where expire_date < ?) UPDATE expiresSubscription SET status = ?";
+DB::select($sql,[$date,self::statusExpired]);
+        })->everyFiveMinutes();
     }
 
     /**

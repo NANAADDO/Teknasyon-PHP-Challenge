@@ -5,6 +5,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\RegisterController;
 use App\Http\Controllers\Api\PurchaseController;
+use App\Http\Controllers\Api\GoogleIosController;
+use App\Http\Controllers\Api\SubscriptionController;
+use App\Http\Controllers\Api\ReportController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -42,3 +46,26 @@ Route::group(['namespace'=>'Api','prefix'=>'purchase'],function(){
 
 
 });
+
+Route::group(['namespace'=>'Api','prefix'=>'verification'],function(){
+
+    Route::post('googleios',[GoogleIosController::class, 'verification']);
+
+
+});
+
+route::group(['namespace'=>'Api','prefix'=>'subscription'],function(){
+
+    Route::post('check',[SubscriptionController::class, 'checkSubscription']);
+
+
+});
+
+oute::group(['namespace'=>'Api','prefix'=>'report'],function(){
+
+    Route::post('day',[ReportController::class, 'daily']);
+    Route::post('os',[ReportController::class, 'operatingSystem']);
+    Route::post('app',[ReportController::class, 'application']);
+
+});
+

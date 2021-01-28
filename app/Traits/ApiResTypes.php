@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: APPUSER3
- * Date: 10/8/2018
- * Time: 11:49 PM
- */
+
 
 namespace App\Traits;
 use App\Constants\StatusCodes;
@@ -23,38 +18,29 @@ trait ApiResTypes
     }
 
   public function FailedContent($data, $httpStatusCode)
+{
+    return response()->json(["data" => $data,"Success"=>false,"statuscode"=>$httpStatusCode], $httpStatusCode);
+}
+    public function FailedContentCustomize($message, $httpStatusCode)
     {
-        return response()->json(["data" => $data,"Success"=>false,"statuscode"=>$httpStatusCode], $httpStatusCode);
+        return response()->json(["message" => $message,"success"=>false,"statuscode"=>$httpStatusCode], $httpStatusCode);
     }
 
-    /**
-     * 200: OK.
-     * The standard success code and default option.
-     *
-     * @param $data
-     * @return \Illuminate\Http\JsonResponse
-     */
+    public function SuccessContentCustomize($message, $httpStatusCode)
+    {
+        return response()->json(["message" => $message,"success"=>true,"statuscode"=>$httpStatusCode], $httpStatusCode);
+    }
+
+
     public function Ok($data){
         return $this->SuccessContent($data, StatusCodes::OK);
     }
 
-    /**
-     * 201: Object created.
-     * Useful for the store actions.
-     *
-     * @param $data
-     * @return \Illuminate\Http\JsonResponse
-     */
+
     public function ObjectCreated($data){
         return $this->SuccessContent($data, StatusCodes::OBJECT_CREATED);
     }
 
-    /**
-     * 204: No content.
-     * When an action was executed successfully, but there is no content to return.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function NoContent(){
         return $this->FailedContent(null, StatusCodes::NO_CONTENT);
     }
