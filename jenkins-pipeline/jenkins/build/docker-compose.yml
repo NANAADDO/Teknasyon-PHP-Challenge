@@ -9,8 +9,8 @@ services:
     depends_on:
       - redis
       - db
-    image: "farm-grow:$BUILD_TAG"
-    container_name: farm-grow
+    image: "teknasyon"
+    container_name: app
     restart: unless-stopped
     tty: true
     environment:
@@ -55,7 +55,7 @@ services:
     networks:
       - app-network
   scheduler:
-    image: "farm-grow:$BUILD_TAG"
+    image: "teknasyon"
     container_name: laravel-scheduler
     restart: unless-stopped
     tty: true
@@ -72,7 +72,7 @@ services:
       REDIS_HOST: redis
 
   queue:
-    image: "farm-grow:$BUILD_TAG"
+    image: "teknasyon"
     container_name: laravel-queue
     restart: unless-stopped
     tty: true
