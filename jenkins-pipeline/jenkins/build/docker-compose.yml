@@ -1,0 +1,134 @@
+version: '3'
+
+services:
+  #PHP Service
+  app:
+    build:
+     context: .
+     dockerfile: Dockerfile
+    depends_on:
+      - redis
+      - db
+    image: "farm-grow:$BUILD_TAG"
+    container_name: farm-grow
+    restart: unless-stopped
+    tty: true
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+      APP_ENV: local
+      CONTAINER_ROLE: app
+      CACHE_DRIVER: redis
+      SESSION_DRIVER: redis
+      QUEUE_DRIVER: redis
+      REDIS_HOST: redis
+    working_dir: /var/www
+    volumes:
+      - $Path/php/local.ini:/usr/local/etc/conf.d/local.ini
+      - $Path:/var/www
+    networks:
+      - app-network
+  remote_host:
+    container_name: remote-host
+    restart: unless-stopped
+    tty:  true
+    image: remote-host
+    build:
+      context: centos
+    volumes:
+      - $Path/centos/db-backup-s3.sh:/tmp/db-backup-s3.sh
+      - $Path/centos/sshd_config:/etc/ssh/sshd_config
+      - $Path/centos/db-backup-blob.sh:/tmp/db-backup-blob.sh
+      - $Path/centos/azcopy:/tmp/azcopy
+    networks:
+      - app-network
+  webserver:
+    image: nginx:alpine
+    container_name: webserver
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "80:80"
+    volumes:
+      - $Path:/var/www
+      - $Path/nginx/conf.d/:/etc/nginx/conf.d
+    networks:
+      - app-network
+  scheduler:
+    image: "farm-grow:$BUILD_TAG"
+    container_name: laravel-scheduler
+    restart: unless-stopped
+    tty: true
+    depends_on:
+      - app
+    volumes:
+      - $Path:/var/www
+    environment:
+      APP_ENV: local
+      CONTAINER_ROLE: scheduler
+      CACHE_DRIVER: redis
+      SESSION_DRIVER: redis
+      QUEUE_DRIVER: redis
+      REDIS_HOST: redis
+
+  queue:
+    image: "farm-grow:$BUILD_TAG"
+    container_name: laravel-queue
+    restart: unless-stopped
+    tty: true
+    depends_on:
+      - app
+    volumes:
+      - $Path:/var/www
+    networks:
+      - app-network
+    environment:
+      APP_ENV: local
+      CONTAINER_ROLE: queue
+      CACHE_DRIVER: redis
+      SESSION_DRIVER: redis
+      QUEUE_DRIVER: redis
+      REDIS_HOST: redis
+
+  redis:
+    container_name: laravel-redis
+    image: redis:4-alpine
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "6739:6379"
+    volumes:
+      - redis:/data
+    networks:
+      - app-network
+  #MySQL Service
+  db:
+    image:  mysql:5.7.22
+    container_name: db
+    restart: unless-stopped
+    tty:  true
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_DATABASE: fdp
+      MYSQL_USER : fdpuser
+      MYSQL_PASSWORD : fdp@2020
+      MYSQL_ROOT_PASSWORD:  fdp_database
+      SERVICE_TAGS : dev
+      SERVICE_NAME: mysql
+    volumes:
+      - dbdata:/var/lib/mysql
+    networks:
+      - app-network
+
+#Docker Networks
+networks:
+  app-network:
+    driver: bridge
+
+#Volumes
+volumes:
+  dbdata:
+    driver: local
+  redis:
+    driver: local

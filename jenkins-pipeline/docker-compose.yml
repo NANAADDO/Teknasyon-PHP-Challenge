@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  #PHP Service
+  jenkins:
+    container_name: jenkins
+    image: jenkins-ansible
+    build:
+      context: .
+    restart: unless-stopped
+    tty:  true
+    ports:
+      - "7080:8080"
+    volumes:
+      - ./jenkins-pipeline/s3upload.sh:/opt/s3upload.sh
+      - ./jenkins-pipeline/publishs3:/opt/publishs3
+      - ./jenkins-pipeline/blobupload.sh:/opt/blobupload.sh
+      - ./jenkins-pipeline/publishblob:/opt/publishblob
+      - ./jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - app-network
+
+#Docker Networks
+networks:
+  app-network:
+    driver: bridge
+
+#Volumes

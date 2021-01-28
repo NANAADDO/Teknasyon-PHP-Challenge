@@ -1,0 +1,21 @@
+#!/bin/bash
+remote_file=/home/ubuntu/.auth
+export IMAGE=$(sed -n '1p' $remote_file/.auth)
+export BUILD_TAG=$(sed -n '2p' $remote_file/.auth)
+export PASS=$(sed -n '3p' $remote_file/.auth)
+export deleteCount=2
+export deleteTagID=`expr $BUILD_TAG - $deleteCount`
+
+docker login -u farmgrow -p $PASS
+
+
+echo "****************PULL LATEST GIT UPDATE INTO  HOST FOLDER && UPDATE CONTAINER WITH LATEST PACKAGE UPDATE********************"
+
+cd /home/ubuntu/fdp_kasapin  && sudo git pull origin master && docker exec -t farm-grow bash -c "php artisan config:cache;composer dump-autoload;composer install;composer update" &&
+docker-compose up -d
+
+
+
+echo "****************************"
+echo "**Removing OLD Images from production server***"
+docker rmi -f "farmgrow/farmgrow-project:$deleteTagID"

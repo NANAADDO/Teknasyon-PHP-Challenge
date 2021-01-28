@@ -1,0 +1,13 @@
+echo "****************************"
+echo "** copying file to remote opt path ***"
+echo "****************************" 
+docker cp /home/ubuntu/.backup remote-host:/tmp/.backup
+echo "*******************copying done********************" 
+
+
+
+echo "****************************"
+echo "** running s3 upload script ***"
+echo "****************************" 
+docker exec -t remote-host bash  -c  "/tmp/db-backup-script-s3.sh"
+echo "*******************running done done********************" 
