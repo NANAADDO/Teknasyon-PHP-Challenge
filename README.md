@@ -5,15 +5,15 @@
 
 ## Technology & Design Details
 
- -Database:Mysql
- -PHP :Laravel 8.0 php 7:3
- -Laravel Code Architecture:Repository
- -Coding Design Pattern:SOLID Principles
- -Docker:Microservice Architecture
- -Redis:Queue ,caching & Scheduler Management
- -Jenkins:CI/CD Pipeline Management
- -AWS S3 :Data Backup Technologies 
- -Azure Blob Storage : Azure File Storage Technologies
+ - Database:Mysql
+ - PHP :Laravel 8.0 php 7:3
+ - Laravel Code Architecture:Repository
+ - Coding Design Pattern:SOLID Principles
+ - Docker:Microservice Architecture
+ - Redis:Queue ,caching & Scheduler Management
+ - Jenkins:CI/CD Pipeline Management
+ - AWS S3 :Data Backup Technologies 
+ - Azure Blob Storage : Azure File Storage Technologies
 
 
 
