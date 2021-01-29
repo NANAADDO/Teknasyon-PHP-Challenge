@@ -80,23 +80,29 @@
   - Report - This API provides reporting on subscriptions based on day,app and status  
   
 ### Acoount
+###### Status options
+ - Active = 1
+ - Pending = 2
+ - Canceled = 3
+ - Expired = 4
+ - Renewed =5
 
-###### API Details
+    ###### API Details
 
-  - http://127.0.0.1:8000/api/auth/user/account
-  - This is where you pass your google or ios plaform account credentials for authentication into app store
-  headers{
-  username:""
-  password:""
-  }
+      - http://127.0.0.1:8000/api/auth/user/account
+      - This is where you pass your google or ios plaform account credentials for authentication into app store
+     headers{
+      username:""
+     password:""
+     }
    
-  - body:{
+      - body:{
            "platform":"ios"
            }
            
-###### Response
+    ###### Response
 
-  - Success :{
+      - Success :{
                  "data": {
                      "userUID": "62a42e20-5fdf-11eb-b9da-1bf5881e2dc2",
                      "listSubscriptions": []
@@ -104,19 +110,19 @@
                  "Success": true,
                  "statuscode": 200
              }
-  - failure :{
+      - failure :{
                  "data": "Unauthorized",
                  "Success": false,
                  "statuscode": 401
              }
 
  
- ### Register
+    ### Register
  
- ###### API Details
+    ###### API Details
  
-   - http://127.0.0.1:8000/api/device/register
-   - payload/boy {
+     - http://127.0.0.1:8000/api/device/register
+     - payload/boy {
       "os":"ios",
       "uid":"4493ffj44iicfj32cjjdjc94jf4f",
       "language":"en",
@@ -124,48 +130,125 @@
       "userUID":"62a42e20-5fdf-11eb-b9da-1bf5881e2dc2"
       }
             
- ###### Response
+    ###### Response
  
-   - Success :{
-                 {
-                     "data": {
-                         "client_token": "45a113ac-c7f2-30b0-90a5-a399ab912716"
-                     },
-                     "Success": true,
-                     "statuscode": 200
-                 }
-   - failure :{
-                  "data": "Error",
-                  "Success": false,
-                  "statuscode": 500
-              }
- 
- ### Purchase
   
-  ###### API Details
+     - Success :{
+                   {
+                       "data": {
+                           "client_token": "45a113ac-c7f2-30b0-90a5-a399ab912716"
+                       },
+                       "Success": true,
+                       "statuscode": 200
+                   }
+     - failure :{
+                    "data": "Error",
+                    "Success": false,
+                    "statuscode": 500
+                }
+ 
+    ### Purchase
+  
+    ###### API Details
   
     {
         "client_token": "45a113ac-c7f2-30b0-90a5-a399ab912716",
         "reciept":"55889433df92djcjd4923zx93"
     }
              
-  ###### Response
+    ###### Response
   
     - Success :{
                   {
-                      "data": {
-                          "client_token": "45a113ac-c7f2-30b0-90a5-a399ab912716"
-                      },
+                     
+                          "message": "Verification Process Successful!!",
                       "Success": true,
                       "statuscode": 200
                   }
     - failure :{
-                   "data": "Error",
+                   "message": "Verification Process Failed!!",
                    "Success": false,
-                   "statuscode": 500
+                   "statuscode": 200
                }
   
   
+    ### Subscription
+    
+    ###### API Details
+    
+      {
+          "client_token": "45a113ac-c7f2-30b0-90a5-a399ab912716"
+      }
+               
+    ###### Response
+    
+      - Success :{
+                    {
+                       
+                        "status": "1",
+                        "Success": true,
+                        "statuscode": 200
+                    }
+                    {
+                        "message": "No Subscription Details Found!!",
+                        "success": false,
+                        "statuscode": 404
+                    }
+      - failure :{
+                     "message": "Incorrect Token/Device Details Not Found!!!!",
+                     "Success": false,
+                     "statuscode": 404
+                 }
+    
+    
+    
+    
+     ## Report
+        
+        #### API Details
+        
+        ###### Report BY DAY
+        
+        
+          {
+              "datetime": "2021-01-29 00:00:00",
+              'status' : "1"
+          }
+          ###### Report BY App
+                  
+                  
+                    {
+                        "appID": "io.whatsapp.com",
+                        'status' : "1"
+                    }
+                    
+                     ###### Report BY App
+                                      
+                                      
+                                        {
+                                            "os": "ios or android",
+                                            'status' : "1"
+                                        }
+                   
+        ###### Response
+        
+         
+     - Success :{
+                   {
+                       "data":
+                       []
+                       "Success": true,
+                       "statuscode": 200
+                   }
+     - failure :{
+                    "data": "Error",
+                    "Success": false,
+                    "statuscode": 500
+                }
+        
+        
+      
+
   
 
 
