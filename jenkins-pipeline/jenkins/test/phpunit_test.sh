@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker exec -t farm-grow bash  -c  "php artisan config:cache;vendor/bin/phpunit"
+docker exec -t app bash  -c  "php artisan config:cache;vendor/bin/phpunit"

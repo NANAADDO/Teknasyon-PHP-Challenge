@@ -1,6 +1,6 @@
 #!/bin/bash
- keypath=/var/jenkins_home/.ssh/touton.pem
- toutonip=3.20.169.215
+ keypath=/var/jenkins_home/.ssh/$pemname
+ toutonip=$ip
  pubpath=/opt/auth
 remotepath=/home/ubuntu/.auth
 echo farmgrow > $pubpath/.auth

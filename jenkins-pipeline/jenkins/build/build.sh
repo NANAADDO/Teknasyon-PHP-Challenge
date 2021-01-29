@@ -34,10 +34,10 @@ rm -rf $new_dir/
 echo "****************************"
 echo "** Building Docker Image ***"
 echo "****************************"
-export BUILD_TAG=10
+
 export Path=/Users/macbook/Desktop/fdp_kasapin/jenkins_home/workspace/complete-pipeline/jenkins-pipeline/jenkins/build
 #export Path=/Users/macbook/Desktop/fdp_kasapin/test_volume
 cd complete-pipeline/jenkins-pipeline/jenkins/build/ && docker-compose  build  && docker-compose up -d
 
 
-docker exec -t farm-grow bash  -c  "composer install;php artisan config:cache;php artisan key:generate"
+docker exec -t app bash  -c  "composer install;php artisan config:cache;php artisan key:generate"

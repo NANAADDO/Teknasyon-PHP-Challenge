@@ -1,82 +1,84 @@
 
 
-## Mobile Application Subscription Management
+# Mobile Application Subscription Management
 
 
 ## Technology & Design Details
-
  - Database:Mysql
  - PHP :Laravel 8.0 php 7:3
- - Laravel Code Architecture:Repository
+ - Laravel Code Design  Architecture:Repository
  - Coding Design Pattern:SOLID Principles
+ - Nginx Webserver
  - Docker:Microservice Architecture
  - Redis:Queue ,caching & Scheduler Management
  - Jenkins:CI/CD Pipeline Management
  - AWS S3 :Data Backup Technologies 
  - Azure Blob Storage : Azure File Storage Technologies
 
+## Project Dependencies
+ - linux server
+ - Docker Setup:Only if you want to containerize your app.
+ - Docker-compose: This is used to manage all your containers in a single host VM
+ - Apache Server :This is needed when  going non docker approach.
+ - Mysql client : This is also needed to manage our data when going non docker approach.
+ - Supervisord : to mange our jobs when going non docker approach
+ - composer :For laravel artisan commands 
+
+## General Process
+ - Git clone Repository into your local path
+ - navigate into your clone repository using your terminal
+
+## Project Implementation Method
+ - Docker
+ - Non Docker
+ 
+### 1.Docker
+#### Containers
+ - Redis
+ - Mysql
+ - Teknasyon app
+ - Queue Processor
+ - Nginx Web server
+ - scheduler Processor
+ - Remote-host
+
+#### NB
+  - Make sure you have docker & docker-compose  installed on your local machine or  on the cloud server
+ 
+  - After completing the General process steps, type 'docker-compose up -d 'in the terminal. Docker images will start building for the containers to start
+  - Type docker ps from terminal to see all 7 containers 
+  - Navigate into docker container app using command "docker exec -ti app bash", if all containers are built successfully
+  - Run  cp .env.example .env from the terminal 
+  - Run composer install
+  - Run php artisan key:generate
+  - configure necessary .env variables
+
+### 2.Non Docker
+#### apps
+ 
+ - Mysql
+ - Teknasyon app
+
+#### NB
+ - Make sure you have apache , mysql & composer  installed on your local machine or  on the cloud server
+ 
+  - After completing the General process steps.
+  - Run  cp .env.example .env from the terminal 
+  - Run composer install
+  - Run php artisan key:generate
+  - configure necessary .env variables
+ 
+## Project Features
+
+  - User Account:This is a feature that validate the user when signing into their App store or apple store which after user verification all subscriptions of the user is returned to the device.
+  - Register :This feature registers the device and generate a token to device all saves the device info into the device table.
+  - Purchase : This feature manages and validates all in app purchases
+  - Check Subscription - This API check for the current subscriptions status
+  - Report - This API provides reporting on subscriptions based on day,app and status  
+
+ 
+ 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
