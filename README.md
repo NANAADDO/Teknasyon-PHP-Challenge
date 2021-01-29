@@ -3,6 +3,8 @@
 # Mobile Application Subscription Management
 
 
+- API
+
 ## Technology & Design Details
  - Database:Mysql
  - PHP :Laravel 8.0 php 7:3
@@ -52,6 +54,7 @@
   - Run composer install
   - Run php artisan key:generate
   - configure necessary .env variables
+  - browser local url :http://0.0.0.0
   
 
 ### 2.Non Docker
@@ -70,16 +73,22 @@
   - configure necessary .env variable
   - php artisan migrate
   - php artisan serve
+   - browser local url :http://127.0.0.1:8000
  
 ## Project Features
 
   - User Account:This is a feature that validate the user when signing into their google App store or apple store which after user verification all subscriptions of the user is returned to the device.
   - Register :This feature registers the device and generate a token to the device and saves the device info into the device table.
-  - Purchase : This feature manages and verifys  all in app purchases
+  - Purchase : This feature manages and verifies  all in app purchases
   - Check Subscription - This API checks for the current subscriptions status
   - Report - This API provides reporting on subscriptions based on day,app and status  
+  - Worker = This runs the cron job scheduler evey 5 minute to update expired subscriptions in the DB
   
-### Acoount
+## Worker
+ - Docker worker is already been handled by the scheduler processor once all containers are up
+ - Non docker run the "php artisan schedule:run --verbose --no-interaction" commands in the your project path terminal.
+  
+### Account
 ###### Status options
  - Active = 1
  - Pending = 2
@@ -150,6 +159,7 @@
     ### Purchase
   
     ###### API Details
+     - http://127.0.0.1:8000/api/purchase/purchase
   
     {
         "client_token": "45a113ac-c7f2-30b0-90a5-a399ab912716",
@@ -175,6 +185,7 @@
     ### Subscription
     
     ###### API Details
+      - http://127.0.0.1:8000/api/subscription/check
     
       {
           "client_token": "45a113ac-c7f2-30b0-90a5-a399ab912716"
@@ -208,7 +219,7 @@
         #### API Details
         
         ###### Report BY DAY
-        
+         - http://127.0.0.1:8000/api/report/day
         
           {
               "datetime": "2021-01-29 00:00:00",
@@ -216,13 +227,15 @@
           }
           ###### Report BY App
                   
+            - - http://127.0.0.1:8000/api/report/app
                   
                     {
                         "appID": "io.whatsapp.com",
                         'status' : "1"
                     }
                     
-                     ###### Report BY App
+                     ###### Report BY OS
+                     - http://127.0.0.1:8000/api/report/os
                                       
                                       
                                         {

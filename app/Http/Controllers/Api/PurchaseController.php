@@ -23,6 +23,7 @@ class PurchaseController extends APIcontroller
     protected $register;
     protected $device;
     const StatusActive = 1;
+    const StatusRenewed = 6;
 
     public function __construct(RegisterRepository $register, DeviceRepository $device,PurchaseRepository $purchase)
     {
