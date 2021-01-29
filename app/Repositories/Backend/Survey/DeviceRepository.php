@@ -70,7 +70,7 @@ class DeviceRepository extends BaseRepository
             return $this->create($data);
 
         }
-        return $this->update($this->model(),$data);
+        return $this->update($this->RecordFetch($this->model(),[['uid', $deviceUID],['os', $os],['app_id', $appID],['user_uid', $userID]]),$data);
     }
 
     }

@@ -52,6 +52,7 @@
   - Run composer install
   - Run php artisan key:generate
   - configure necessary .env variables
+  
 
 ### 2.Non Docker
 #### apps
@@ -66,18 +67,106 @@
   - Run  cp .env.example .env from the terminal 
   - Run composer install
   - Run php artisan key:generate
-  - configure necessary .env variables
+  - configure necessary .env variable
+  - php artisan migrate
+  - php artisan serve
  
 ## Project Features
 
-  - User Account:This is a feature that validate the user when signing into their App store or apple store which after user verification all subscriptions of the user is returned to the device.
-  - Register :This feature registers the device and generate a token to device all saves the device info into the device table.
-  - Purchase : This feature manages and validates all in app purchases
-  - Check Subscription - This API check for the current subscriptions status
+  - User Account:This is a feature that validate the user when signing into their google App store or apple store which after user verification all subscriptions of the user is returned to the device.
+  - Register :This feature registers the device and generate a token to the device and saves the device info into the device table.
+  - Purchase : This feature manages and verifys  all in app purchases
+  - Check Subscription - This API checks for the current subscriptions status
   - Report - This API provides reporting on subscriptions based on day,app and status  
+  
+### Acoount
+
+###### API Details
+
+  - http://127.0.0.1:8000/api/auth/user/account
+  - This is where you pass your google or ios plaform account credentials for authentication into app store
+  headers{
+  username:""
+  password:""
+  }
+   
+  - body:{
+           "platform":"ios"
+           }
+           
+###### Response
+
+  - Success :{
+                 "data": {
+                     "userUID": "62a42e20-5fdf-11eb-b9da-1bf5881e2dc2",
+                     "listSubscriptions": []
+                 },
+                 "Success": true,
+                 "statuscode": 200
+             }
+  - failure :{
+                 "data": "Unauthorized",
+                 "Success": false,
+                 "statuscode": 401
+             }
 
  
+ ### Register
  
+ ###### API Details
+ 
+   - http://127.0.0.1:8000/api/device/register
+   - payload/boy {
+      "os":"ios",
+      "uid":"4493ffj44iicfj32cjjdjc94jf4f",
+      "language":"en",
+      "appID":"io.3music.com",
+      "userUID":"62a42e20-5fdf-11eb-b9da-1bf5881e2dc2"
+      }
+            
+ ###### Response
+ 
+   - Success :{
+                 {
+                     "data": {
+                         "client_token": "45a113ac-c7f2-30b0-90a5-a399ab912716"
+                     },
+                     "Success": true,
+                     "statuscode": 200
+                 }
+   - failure :{
+                  "data": "Error",
+                  "Success": false,
+                  "statuscode": 500
+              }
+ 
+ ### Purchase
+  
+  ###### API Details
+  
+    {
+        "client_token": "45a113ac-c7f2-30b0-90a5-a399ab912716",
+        "reciept":"55889433df92djcjd4923zx93"
+    }
+             
+  ###### Response
+  
+    - Success :{
+                  {
+                      "data": {
+                          "client_token": "45a113ac-c7f2-30b0-90a5-a399ab912716"
+                      },
+                      "Success": true,
+                      "statuscode": 200
+                  }
+    - failure :{
+                   "data": "Error",
+                   "Success": false,
+                   "statuscode": 500
+               }
+  
+  
+  
 
 
 

@@ -61,7 +61,7 @@ route::group(['namespace'=>'Api','prefix'=>'subscription'],function(){
 
 });
 
-oute::group(['namespace'=>'Api','prefix'=>'report'],function(){
+route::group(['namespace'=>'Api','prefix'=>'report'],function(){
 
     Route::post('day',[ReportController::class, 'daily']);
     Route::post('os',[ReportController::class, 'operatingSystem']);

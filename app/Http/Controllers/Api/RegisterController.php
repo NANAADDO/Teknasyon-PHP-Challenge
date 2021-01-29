@@ -40,7 +40,7 @@ class RegisterController extends APIcontroller
         /****CHECKING TO SEE IF DEVICE BELONGING TO USER ACCOUNT ALREADY EXIST
          IN THE REGISTER TABLE*************/
         if($this->register->RecordExists($deviceUID,$os,$userUID)) {
-            //return $this->Ok($this->register->RecordExists($deviceUID,$os,$userUID));
+
 
             /*********GETTING THE DEVICE INFO IN THE REGISTER TABLE ***********/
             $RegiatratioDeviceInfo = $this->register->RecordFetch(Register::class, [['user_uid', $userUID],
